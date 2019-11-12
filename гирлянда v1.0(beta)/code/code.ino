@@ -2,7 +2,7 @@ int red = 5;
 int green = 6;
 int blue = 9;
 
-int mode = 0;
+int mode;
 
 int touch = 2;
 int counter = 10;
@@ -117,8 +117,10 @@ void mode5(){
   digitalWrite(red, LOW);
   digitalWrite(green, LOW);
   digitalWrite(blue, LOW);
-  delay(120);
-  
+  delay(120); 
+}
+
+void mode6(){
   
 }
 
@@ -128,8 +130,7 @@ void modeS(){
     if (mode>5){
       mode = 0;
     }
-    Serial.print("Eah");
-    
+    Serial.print("Eah"); 
   }
   
 }
