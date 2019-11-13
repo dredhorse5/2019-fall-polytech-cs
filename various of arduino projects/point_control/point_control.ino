@@ -1,10 +1,9 @@
 #include <Adafruit_NeoPixel.h>
-int PIN = 6;
-int NUMPIXELS = 8;
+int PIN = 6; // пин светодиодной ленты
+int NUMPIXELS = 8; // колличество светодиодов
 uint32_t last_millis = 0;
 uint32_t last_millisY= 0;
 int i;
-int brightness = 150;
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
@@ -19,9 +18,9 @@ void setup() {
 void loop() {
   int Y =analogRead(A6);
   int DELAYVAL = analogRead(A5);
-  int RED = map(analogRead(A4), 0, 1023, 0, 150);
-  int GREEN = map(analogRead(A3), 0, 1023, 0, 150);
-  int BLUE = map(analogRead(A2), 0, 1023, 0, 150);
+  int RED = map(analogRead(A4), 0, 1023, 0, 150); // красный регулятор
+  int GREEN = map(analogRead(A3), 0, 1023, 0, 150); // зеленый регулятор
+  int BLUE = map(analogRead(A2), 0, 1023, 0, 150); // синий регулятор
 
   if(millis()- last_millis > DELAYVAL){
     if ( Y < 100){
