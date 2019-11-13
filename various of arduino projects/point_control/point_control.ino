@@ -3,15 +3,8 @@ int PIN = 6;
 int NUMPIXELS = 8;
 uint32_t last_millis = 0;
 uint32_t last_millisY= 0;
-uint32_t last_millis1= 0;
-uint32_t last_millis2= 0;
-int brightness1 = 70;
-int brightness2 = 20;
 int i;
-int DELAYVAL = 200;
 int brightness = 150;
-int counter = 0;
-int counter1 = 0;
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
@@ -25,15 +18,18 @@ void setup() {
         
 void loop() {
   int Y =analogRead(A6);
+  int DELAYVAL = analogRead(A5);
+  int RED = map(analogRead(A4), 0, 1023, 0, 150);
+  int GREEN = map(analogRead(A3), 0, 1023, 0, 150);
+  int BLUE = map(analogRead(A2), 0, 1023, 0, 150);
 
-  if(millis()- last_millis > 100){
+  if(millis()- last_millis > DELAYVAL){
     if ( Y < 100){
       i++;
       if (i > 7){
         i = 7;
       }
       pixels.clear();
-      pixels.setPixelColor(i, pixels.Color(0, brightness,0));
       pixels.show();
       
       
@@ -43,20 +39,22 @@ void loop() {
       if (i < 0){
         i = 0;
       }
-      pixels.clear();
-      pixels.setPixelColor(i, pixels.Color(0, 150,0));
-      pixels.show();
       
     }
+    pixels.clear();
+    pixels.setPixelColor(i, pixels.Color(RED, GREEN,BLUE));
+    pixels.show();
     last_millis = millis();
-    Serial.println(last_millis);
   }
   
   
     
-  if( millis() - last_millisY > 100){
+  if( millis() - last_millisY > 200){
     //Serial.println(Y);
-    uint32_t last_millisY = millis();
+    last_millisY = millis();
     Serial.println(i);
+    Serial.println(RED);
+    Serial.println(GREEN);
+    Serial.println(BLUE);
   }
 }
