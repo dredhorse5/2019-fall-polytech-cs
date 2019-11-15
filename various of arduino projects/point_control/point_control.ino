@@ -2,7 +2,7 @@
 int tail[8] = {160, 160, 160, 160, 160, 160, 160,160};
 int PIN = 6; // пин светодиодной ленты
 int NUMPIXELS = 8; // колличество светодиодов
-int brightness = 40 ; // скорость затухания светодиода
+int brightness = 10 ; // скорость затухания светодиода
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 //======================Нужные переменные======================
@@ -23,15 +23,17 @@ void loop() {
   int DELAYVAL = analogRead(A5);
   if(millis()- last_millis > DELAYVAL){
     last_led = led;
+    //====================================
     if ( Y < 100){
       led++;
-      if (led > 7){ led = 7; }
+      if (led > 7) led = 7; 
     }
     
     if ( Y > 1000){
       led--;
-      if (led < 0){ led = 0; }
+      if (led < 0) led = 0; 
     }
+    //=====================================
     if( last_led - led < 0){
       n = led - 1;
       tail[n] = 160;
@@ -39,8 +41,8 @@ void loop() {
     if( last_led - led > 0){
       n = led + 1;
       tail[n] = 160;
-      
     }
+    //=====================================
     for(int num = 0; num <= NUMPIXELS; num++){
       if(tail[num] > 1){
         tail[num] = tail[num] - brightness;
@@ -48,6 +50,7 @@ void loop() {
         pixels.setPixelColor(num, pixels.Color(tail[num],0,0));
         
       } 
+    //=====================================
     }
     
     pixels.setPixelColor(led, pixels.Color(150,0,0));
@@ -55,14 +58,16 @@ void loop() {
     last_millis = millis();
   }
   
-  
-    
+  printSerial();
+}
+
+void printSerial(){
   if( millis() - last_millisY > 200){
-    Serial.print(tail[0]); Serial.print(tail[1]) ;Serial.print(tail[2]); Serial.print(tail[3]); Serial.print(tail[4]); Serial.print(tail[5]); Serial.print(tail[6]); Serial.print(tail[7]);
-    Serial.println(" ");
+    //Serial.print(tail[0]); Serial.print(tail[1]) ;Serial.print(tail[2]); Serial.print(tail[3]); Serial.print(tail[4]); Serial.print(tail[5]); Serial.print(tail[6]); Serial.print(tail[7]);
+    //Serial.println(" ");
     //Serial.println(n);
     //Serial.println(Y);
-    last_millisY = millis();
+    //last_millisY = millis();
     //Serial.println(led);
     //Serial.println(RED);
     //Serial.println(GREEN);
