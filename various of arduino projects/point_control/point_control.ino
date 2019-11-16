@@ -2,11 +2,13 @@
 int tail[8] = {160, 160, 160, 160, 160, 160, 160,160};
 int PIN = 6; // пин светодиодной ленты
 int NUMPIXELS = 8; // колличество светодиодов
-int brightness = 10 ; // скорость затухания светодиода
+int brightness = 5 ; // скорость затухания светодиода
+int DELAYVAL = 100;
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 //======================Нужные переменные======================
 uint32_t last_millis = 0;
+uint32_t last_millisX= 0;
 uint32_t last_millisY= 0;
 int led= 0;
 int n = 0;
@@ -19,8 +21,9 @@ void setup() {
 }
        
 void loop() {
+  //pixels.clear();
   int Y =analogRead(A6);
-  int DELAYVAL = analogRead(A5);
+  //int DELAYVAL = analogRead(A5);
   if(millis()- last_millis > DELAYVAL){
     last_led = led;
     //====================================
@@ -42,26 +45,29 @@ void loop() {
       n = led + 1;
       tail[n] = 160;
     }
-    //=====================================
+    last_millis = millis();
+  }
+  
+  if(millis() - last_millisY > 10){
+    Serial.print("a");
     for(int num = 0; num <= NUMPIXELS; num++){
       if(tail[num] > 1){
         tail[num] = tail[num] - brightness;
         if( tail[num] < 0) tail[num] = 0;
-        pixels.setPixelColor(num, pixels.Color(tail[num],0,0));
-        
-      } 
-    //=====================================
+        pixels.setPixelColor(num, pixels.Color(tail[num],0,tail[num]));
+      }
     }
-    
-    pixels.setPixelColor(led, pixels.Color(150,0,0));
+    //=====================================
+   
+    pixels.setPixelColor(led, pixels.Color(160,0,160));
     pixels.show();
-    last_millis = millis();
+    last_millisY = millis();
   }
   
-  printSerial();
+  //printSerial();
 }
 
-void printSerial(){
+/*void printSerial(){
   if( millis() - last_millisY > 200){
     //Serial.print(tail[0]); Serial.print(tail[1]) ;Serial.print(tail[2]); Serial.print(tail[3]); Serial.print(tail[4]); Serial.print(tail[5]); Serial.print(tail[6]); Serial.print(tail[7]);
     //Serial.println(" ");
@@ -73,4 +79,4 @@ void printSerial(){
     //Serial.println(GREEN);
     //Serial.println(BLUE);
   }
-}
+}*/
