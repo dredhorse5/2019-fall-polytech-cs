@@ -3,7 +3,8 @@ int tail[8] = {160, 160, 160, 160, 160, 160, 160,160};
 int PIN = 6; // пин светодиодной ленты
 int NUMPIXELS = 8; // колличество светодиодов
 int brightness = 5 ; // скорость затухания светодиода
-int DELAYVAL = 100;
+int DELAYVAL = 0;
+int DELAYVAL_TAIL = 0;
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 //======================Нужные переменные======================
@@ -22,8 +23,9 @@ void setup() {
        
 void loop() {
   //pixels.clear();
-  int Y =analogRead(A6);
-  //int DELAYVAL = analogRead(A5);
+  int Y = analogRead(A6); // движение светодиода
+  int DELAYVAL = analogRead(A5); // скорость движения светодиода
+  int DELAYVAL_TAIL = map(analogRead(A7), 0, 1023, 0, 100); // скорость затухания хвоста
   if(millis()- last_millis > DELAYVAL){
     last_led = led;
     //====================================
@@ -48,7 +50,7 @@ void loop() {
     last_millis = millis();
   }
   
-  if(millis() - last_millisY > 10){
+  if(millis() - last_millisY > DELAYVAL_TAIL){
     Serial.print("a");
     for(int num = 0; num <= NUMPIXELS; num++){
       if(tail[num] > 1){
