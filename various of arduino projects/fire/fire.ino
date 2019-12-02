@@ -5,8 +5,8 @@ int NUMPIXELS = 8;
 int DELAYVAL = 500;
 int last_millis = 0;
 int last_millis_LOW = 0;
-int fire[NUMPIXELS] = {160, 160, 160, 160, 160, 160, 160, 160};
-int num_mode[2] = {0,0,0}
+int fire[8] = {160, 160, 160, 160, 160, 160, 160, 160};
+int num_mode[2] = {0,0,0};
 int fire_mode1 = 0;
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 

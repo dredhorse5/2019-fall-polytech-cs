@@ -10,12 +10,12 @@ def setup():
     noStroke()
     drow = loadShape("m1.svg")
     borders = range(6)
-    borders[0] = drow.getChild("path16")
-    borders[1] = drow.getChild("path18")
-    borders[2] = drow.getChild("path20")
-    borders[3] = drow.getChild("path22")
-    borders[4] = drow.getChild("path24")
-    borders[5] = drow.getChild("path26")
+    borders[0] = drow.getChild("path3744")
+    borders[1] = drow.getChild("path3746")
+    borders[2] = drow.getChild("path3748")
+    borders[3] = drow.getChild("path3750")
+    borders[4] = drow.getChild("path3752")
+    borders[5] = drow.getChild("path3754")
     
     
 def draw():
