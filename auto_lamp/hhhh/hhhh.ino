@@ -2,16 +2,15 @@
 #include <LiquidCrystal_I2C.h> 
 LiquidCrystal_I2C lcd(0x3F,16,2);
 int led = 3;
-unsigned long timer = 1;
 int days = 0;
 unsigned long night = 24*60*60;
 int minuteKey = 0;
 //==============================рассвет
-unsigned long morning_start = timer* 9; //время начала рассвета
-unsigned long morning_end = timer *  10;  // время конца рассвета
+int morning_start = 7; //время начала рассвета в часах
+int morning_end =   8;  // время конца рассвета в часах
 //======конец рассвета=== начало заката
-uint32_t evening_start = timer * 19;  // время начала заката
-uint32_t evening_end = timer *   20;  // время конца
+int evening_start =  9;  // время начала заката в часах
+int evening_end =    10;  // время конца в часах
 //=========================конец заката
 
 void setup() {
@@ -28,9 +27,9 @@ void setup() {
 }
 
 void loop() {
-  int hours = millis()/3600000 - days*24;
+  int hours = millis()/3600000 - days*24 ;
   int minutes = millis()/60000 - minuteKey*60;
-  if(minutes >= 90){
+  if(minutes >= 60){
     minuteKey++;
   }
   lcd.setCursor(6,0);
@@ -38,8 +37,9 @@ void loop() {
   lcd.print(":");
   lcd.print(minutes);
   lcd.print("  ");
+  //Serial.println(hours);
   if(hours> morning_start and morning_end > hours){
-    int i = map(minutes, 0, 60, 0, 255);
+    int i = map(hours, morning_start , morning_end, 0, 255);
     analogWrite(led, i);
     //Serial.println("EEEEEEEEEEEEEEEEEEEEEEE");
   }
@@ -47,7 +47,7 @@ void loop() {
     digitalWrite(led, HIGH);
   }
   if(hours > evening_start and evening_end < hours){
-    int k = map(minutes, 0, 60, 255, 0);
+    int k = map(hours, evening_start, evening_end, 255, 0);
     analogWrite(led, k);
   }
   if(hours > evening_end and night < hours){
