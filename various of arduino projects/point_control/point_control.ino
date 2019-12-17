@@ -66,7 +66,6 @@ void loop() {
     last_millisY = millis();
   }
   
-  //printSerial();
 }
 
 /*void printSerial(){
