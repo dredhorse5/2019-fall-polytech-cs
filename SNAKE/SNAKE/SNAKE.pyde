@@ -1,7 +1,7 @@
 field_size = 40
-snakeTailX = [0,40,80]
+snakeTailX = [40,80,120]
 snakeTailY = [0,0,0 ]
-Xhead, Yhead, Xfood, Yfood = 120,0,0,0
+Xhead, Yhead, Xfood, Yfood = 120,0,-40,- 40
 snakeDirection = 'R'
 foodkey = True
 snakeLeight = 2
@@ -46,7 +46,7 @@ def keyPressed():
         deadKey = False
         score = 0
         Xhead, Yhead = 120, 0
-        snakeTailX = [0,40,80]
+        snakeTailX = [40,80,120]
         snakeTailY = [0,0,0 ]
     
 def snakeTail():
@@ -109,7 +109,7 @@ def snakeDead():
     global deadKey, score
     deadKey = True
     textSize(50)
-    text("snake dead!", 250, 200)
+    text("snake is dead!", 250, 200)
     textSize(40)
-    text("pess space to start new game", 100, 250)
+    text("pess down to start new game", 100, 250)
     text(score, 350, 300)
