@@ -38,7 +38,7 @@ def draw():
     
 def keyPressed():
     global snakeDirection, foodkey, snakeLeight, deadKey, score, Xhead, Yhead,snakeTailX,snakeTailY
-    if deadKey and keyCode == DOWN:
+    if (deadKey and key == ENTER):
         print("ssss")
         snakeDirection = 'R'
         foodkey = True
@@ -111,5 +111,5 @@ def snakeDead():
     textSize(50)
     text("snake is dead!", 250, 200)
     textSize(40)
-    text("pess down to start new game", 100, 250)
+    text("pess enter to start new game", 100, 250)
     text(score, 350, 300)
