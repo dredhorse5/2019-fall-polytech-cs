@@ -1,13 +1,15 @@
 #include <Adafruit_NeoPixel.h>
-int mode = 0;
 int PIN = 6;
 int NUMPIXELS = 8;
-int DELAYVAL = 500;
-int last_millis = 0;
-int last_millis_LOW = 0;
-int fire[8] = {160, 160, 160, 160, 160, 160, 160, 160};
-int num_mode[2] = {0,0,0};
-int fire_mode1 = 0;
+uint32_t last_millis_red = 0;
+uint32_t last_millis_green = 0;
+uint32_t last_millis_blue = 0;
+int red = 50;
+int green= 50;
+int blue = 50;
+int r = 1;
+int g = 1;
+int b = 1;
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
@@ -16,42 +18,33 @@ void setup() {
 }
 
 void loop() {
-  if( millis() - last_millis > DELAYVAL){
-    mode = random(0, 1000);
-    if(mode>0 && mode < 100){
-      num_mode[0] = 8
+  //====================================================
+  if (millis()-last_millis_red > 30){
+    red += r*random(2,3);
+    if (red >= 245 or red <= 5){
+      r *= -1;
     }
-    
-    for( int i = 0; i <= 2; i++){
-      if( num_mode[i] > 0){
-        if(i = 0){
-          mode1();
-        }
-        if( i = 1){
-          mode2();
-        }
-        if (i = 2){
-          mode3();
-        }
-      }
-    }
-
-
-//===========================================================================   
-    if(millis() - last_millisY > 5){
-    Serial.print("a");
-    for(int num = 0; num <= NUMPIXELS; num++){
-      if(tail[num] > 1){
-        tail[num] = tail[num] - brightness;
-        if( tail[num] < 0) tail[num] = 0;
-        pixels.setPixelColor(num, pixels.Color(tail[num],0,tail[num]));
-      }
-    }
+    last_millis_red = millis();
   }
-//===========================================================================
-  pixels.show();
-}
-
-void mode1(){
-  pixels.setPixelColor(fire_mode1, pixels,Color(160, 0,0);
+  //====================================================
+  if (millis()-last_millis_green >20){
+    green += g*random(1,2);
+    if (green >= 245 or green <= 5){
+      g *= -1;
+    }
+    last_millis_green = millis();
+  }
+  //====================================================
+  if (millis()-last_millis_blue >25){
+    blue += b*random(3,4);
+    if (blue >= 245 or blue <= 5){
+      b *= -1;
+    }
+    last_millis_blue = millis();
+  }
+  //====================================================
+  for( int i; i < 8; i++){
+    pixels.setPixelColor(i, pixels.Color(red,green,blue));
+  }
+    pixels.show();
 }
