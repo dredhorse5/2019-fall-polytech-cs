@@ -1,24 +1,24 @@
 int led = 3;
 int minuteKey = 0;
-int days;
+float days;
 //==============================рассвет
-int morning_start =60* 9 ; //время начала рассвета в часах
-int morning_end =60*   10;  // время конца рассвета в часах
+float morning_start =60* 0 ; //время начала рассвета в часах
+float morning_end =60*   0.01;  // время конца рассвета в часах
 //======конец рассвета=== начало заката
-int evening_start =60
-*  18;  // время начала заката в часах
-int evening_end =60*    19;  // время конца в часах
+float evening_start =60*  0.02;  // время начала заката в часах
+float evening_end =60*    0.05;  // время конца в часах
 //=========================конец заката
+//( (x - in_min) * (out_max - out_min) / (in_max - in_min) - out_min )
 
 void setup() {
   pinMode(led, OUTPUT);
-  
+  Serial.begin(9600);
 }
 
 void loop() {
-  int minutes = millis()/60000 - days*1440; 
+  float minutes = float(millis())/60000 - days*1440; 
   if(minutes>= morning_start and morning_end > minutes){
-    int i = map(minutes, morning_start , morning_end, 0, 255);
+    int i = ( (minutes - morning_start) * (255 - 0) / (morning_end - morning_start) - 0 );
     analogWrite(led, i);
   }
   
@@ -26,7 +26,7 @@ void loop() {
     
   
   if(minutes >= evening_start and evening_end > minutes){
-    int i = map(minutes, evening_start, evening_end, 255, 0);
+    int i = 255 - ((minutes - evening_start) * (255 - 0) / (evening_end - evening_start) - 0 );
     analogWrite(led, i);
     }
   
